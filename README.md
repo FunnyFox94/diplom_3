@@ -1,1 +1,1 @@
-# diplom_3
+Created autotests for site. You can check the allure report

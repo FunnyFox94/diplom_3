@@ -1,14 +1,12 @@
 import allure
 
 from utils import urls as url
-from utils.helpers import login_and_create_order
 
 @allure.feature('Создание заказа')
 class TestCreatingOrder:
     @allure.story('Отображение номера заказа в разделе "В работе"')
     @allure.title('Проверка, что номер заказа отображается в разделе "В работе"')
-    def test_order_number_appears_in_progress_section(self, main_page, login_page, feed_page):
-        login_and_create_order(login_page, main_page)
+    def test_order_number_appears_in_progress_section(self, main_page, login_page, feed_page, login_and_create_order):
         order_id = int(main_page.order_id())
         feed_page.go_to_url(url.FEED)
         feed_page.wait_for_id_new_order(order_id)
@@ -22,8 +20,7 @@ class TestCreatingOrder:
 
     @allure.story('История заказов в ленте заказов')
     @allure.title('Проверка отображения истории заказов в ленте заказов')
-    def test_order_history_displays_in_order_feed(self, main_page, login_page, feed_page, user_profile_page):
-        login_and_create_order(login_page, main_page)
+    def test_order_history_displays_in_order_feed(self, main_page, login_page, feed_page, user_profile_page, login_and_create_order):
         order_id = main_page.order_id()  # Почему делаю это в двух тестах. Я проверяю, что в in progress летит нужный id
         feed_page.go_to_url(url.FEED)
         feed_page.wait_for_id_new_order(order_id)
@@ -37,11 +34,10 @@ class TestCreatingOrder:
 
     @allure.story('Изменение счетчиков заказов в ленте заказов')
     @allure.title('Проверка изменения счетчиков заказов после создания нового заказа')
-    def test_check_order_counters_change_in_order_feed(self, main_page, login_page, feed_page):
+    def test_check_order_counters_change_in_order_feed(self, main_page, login_page, feed_page, login_and_create_order):
         feed_page.go_to_url(url.FEED)
         old_orders_for_today = feed_page.get_orders_for_today()
         old_orders_for_all_time = feed_page.get_orders_for_all_time()
-        login_and_create_order(login_page, main_page)
         feed_page.go_to_url(url.FEED)
         new_orders_for_today = feed_page.get_orders_for_today()
         new_orders_for_all_time = feed_page.get_orders_for_all_time()

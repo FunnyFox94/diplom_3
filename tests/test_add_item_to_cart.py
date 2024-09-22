@@ -1,14 +1,13 @@
 import allure
 
 from utils import urls as url
-from utils.helpers import login_and_navigate_to_profile
+
 
 @allure.feature('Корзина')
 class TestAddItemToCart:
     @allure.story('Добавление товара в корзину')
     @allure.title('Проверка добавления товара в корзину')
-    def test_add_item_to_cart(self, main_page, login_page):
-        login_and_navigate_to_profile(login_page, main_page)
+    def test_add_item_to_cart(self, main_page, login_page, login_and_navigate_to_profile):
         main_page.go_to_url(url.LOGIN_PAGE_URL)
 
         main_page.click_constructor_in_header()
@@ -22,8 +21,7 @@ class TestAddItemToCart:
 
     @allure.story('Открытие карточки товара')
     @allure.title('Проверка открытия и закрытия карточки товара')
-    def test_open_item_cart(self, main_page, login_page):
-        login_and_navigate_to_profile(login_page, main_page)
+    def test_open_item_cart(self, main_page, login_page, login_and_navigate_to_profile):
         main_page.go_to_url(url.BASE_URL)
 
         main_page.wait_for_loading_cart_area()
